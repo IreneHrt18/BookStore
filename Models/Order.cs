@@ -17,15 +17,15 @@ namespace BookStore.Models
         //[Display(Name = "书籍")]
         //public int BookId { get; set; }
 
-        [Required]
-        [Display(Name = "数量")]
-        public int Count { get; set; }
+        //[Required]
+        //[Display(Name = "数量")]
+        //public int Count { get; set; }
 
         [Timestamp]
         [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<OrderBook> OrderBooks { get; set; }
         public User User { get; set; }
     }
 }
