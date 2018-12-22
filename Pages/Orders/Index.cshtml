@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].Count)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Order[0].Time)
             </th>
             <th>
@@ -28,9 +25,6 @@
     <tbody>
 @foreach (var item in Model.Order) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Time)
             </td>

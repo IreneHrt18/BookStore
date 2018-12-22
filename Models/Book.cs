@@ -35,7 +35,7 @@ namespace BookStore.Models
         [StringLength(300)]
         public string Author { get; set; }
 
-        ICollection<Cart> Carts { get; set; }
-        ICollection<Order> Orders { get; set; }
+        public ICollection<Cart> Carts { get; set; }
+        public ICollection<OrderBook> OrderBooks { get; set; }
     }
 }
