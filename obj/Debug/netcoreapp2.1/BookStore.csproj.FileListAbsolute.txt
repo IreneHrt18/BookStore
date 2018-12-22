@@ -50,3 +50,11 @@ D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Books\Details.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Books\Edit.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Books\Index.g.cshtml.cs
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.csprojAssemblyReference.cache
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.csproj.CoreCompileInputs.cache
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.RazorAssemblyInfo.cache
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.RazorAssemblyInfo.cs
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.AssemblyInfoInputs.cache
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.AssemblyInfo.cs
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.dll
+C:\Users\13125\Documents\Visual Studio 2017\Project\BookStore\obj\Debug\netcoreapp2.1\BookStore.pdb
