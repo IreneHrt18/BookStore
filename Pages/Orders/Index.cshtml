@@ -10,6 +10,8 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -17,9 +19,12 @@
                 @Html.DisplayNameFor(model => model.Order[0].Time)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].User)
+                @Html.DisplayNameFor(model => model.Order[0].User.UserName)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].OrderId)
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -29,12 +34,21 @@
                 @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Address)
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                <a asp-page="../OrderBooks/Index" asp-route-id="@item.OrderId">详情</a> 
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+
+
+
             </td>
         </tr>
 }
