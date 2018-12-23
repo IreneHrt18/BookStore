@@ -20,9 +20,32 @@ namespace BookStore.Pages.Books
 
         public IList<Book> Book { get;set; }
 
+        [BindProperty(SupportsGet =true)]
+        public string searchString { get; set; }
+
         public async Task OnGetAsync()
         {
-            Book = await _context.Book.ToListAsync();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                Book = await _context.Book.Where(item => item.BookName.Contains(searchString)).ToListAsync();
+            }
+            else
+            {
+                Book = await _context.Book.ToListAsync();
+            }
+        }
+        //添加购物车
+        public async Task<IActionResult> OnPostAddItemToCartAsync(int itemNo)
+        {
+            var cart = new Cart();
+            cart.BookId = itemNo;
+            cart.UserId = 1001;
+            cart.CartId = 1;
+            //异步执行，异步更新
+            _context.Cart.Add(cart);
+            await _context.SaveChangesAsync();
+            return RedirectToPage();
         }
     }
 }

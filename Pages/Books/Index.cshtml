@@ -2,60 +2,65 @@
 @model BookStore.Pages.Books.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "BookList";
+    ViewBag.Title = "BookList";
+
 }
 
-<h2>Index</h2>
+<h2>BookList</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].BookName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Publisher)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Img)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Book) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Img)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<form>
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <p>
+        <input type="text" id="searchBox" asp-for="searchString" />
+        <button type="submit" class="btn-group">搜索</button>
+    </p>
+</form>
+<div style="margin:0 auto; width:1000px;height:auto; padding:0px;">
+    <form method="post">
+        <table class="table-hover" border="0">
+            <thead>
+                <tr>
+                    <th style="width:auto">
+                        @Html.DisplayNameFor(model => model.Book[0].BookName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].Img)
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Book)
+                {
+                    <tr>
+                        <td class="name" style="width:auto">
+                            @Html.DisplayFor(modelItem => item.BookName)
+                        </td>
+                        <td class="price">
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td class="img">
+                            <img class="img-circle" src="@item.Img" width="40" height="40" alt="Alternate Text" />
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            <button type="submit" asp-page-handler="AddItemToCart" asp-route-itemNo="@item.Id">
+                                添加购物车
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
