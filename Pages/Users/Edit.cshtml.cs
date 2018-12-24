@@ -29,7 +29,7 @@ namespace BookStore.Pages.Users
                 return NotFound();
             }
 
-            User = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
+            User = await _context.User.FirstOrDefaultAsync(m => m.Id.Equals( id));
 
             if (User == null)
             {
@@ -53,7 +53,7 @@ namespace BookStore.Pages.Users
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(User.Id))
+                if (!UserExists(int.Parse(User.Id)))
                 {
                     return NotFound();
                 }
@@ -68,7 +68,7 @@ namespace BookStore.Pages.Users
 
         private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.User.Any(e => e.Id.Equals( id));
         }
     }
 }

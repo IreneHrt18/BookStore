@@ -23,7 +23,8 @@ namespace BookStore.Pages.Carts
 
         public async Task OnGetAsync()
         {
-            User user = new User();            user.Id = 1001;
+            User user = new User();
+            user.Id =   "1001";
             Cart = await _context.Cart
                 .Include(c => c.Book)
                 .Include(c => c.User)
@@ -48,9 +49,11 @@ namespace BookStore.Pages.Carts
         }
         private IQueryable<Cart> GetCart()
         {
-            User user = new User();            user.Id = 1001;
+            User user = new User();
+            user.Id = "1001";
             IQueryable<Cart> cartIQ = from c in _context.Cart
-                                      select c;            cartIQ = cartIQ.Where(c => c.UserId.Equals(user.Id));
+                                      select c;
+            cartIQ = cartIQ.Where(c => c.UserId.Equals(user.Id));
             return cartIQ;
         }
     }

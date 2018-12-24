@@ -12,7 +12,7 @@ namespace BookStore.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        new public int Id { get; set; }
+        new public string Id { get; set; }
         [Required]
         [Display(Name = "用户名")]
         [StringLength(30)]

@@ -30,7 +30,7 @@ namespace BookStore.Pages.Orders
 
             Order = await _context.Order
                     .Include(o => o.User)
-                    .Where(o => o.User.Id == 1002)
+                    .Where(o => o.User.Id == "1002")
                     .Include(o => o.OrderBooks).ToListAsync();
 
         }
