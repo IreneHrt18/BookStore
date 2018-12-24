@@ -32,7 +32,7 @@ namespace BookStore.Pages.Books
             //Book = await _context.Book.OrderByDescending(o=>o.Price).ToListAsync();
             Books = from r in _context.Book
                     select r;
-            Books.OrderByDescending(o => o.Price);
+           // Books.OrderByDescending(o => o.Price);
 
 
             int pageSize = 3;
