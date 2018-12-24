@@ -4,19 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Models
 {
-    public class User
+    public class User: IdentityUser
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
-
+        new public int Id { get; set; }
         [Required]
         [Display(Name = "用户名")]
         [StringLength(30)]
-        public string UserName { get; set; }
+        override public string UserName { get; set; }
         [Required]
         [Display(Name = "密码")]
         [StringLength(30)]
@@ -36,7 +36,7 @@ namespace BookStore.Models
         [Required]
         [Display(Name = "邮箱")]
         [StringLength(50)]
-        public string Email { get; set; }
+        override public string Email { get; set; }
 
         ICollection<Cart> Carts { get; set; }
         ICollection<Order> Orders { get; set; }
