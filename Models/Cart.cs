@@ -16,6 +16,8 @@ namespace BookStore.Models
         public int UserId { get; set; }
         [Display(Name ="书籍")]
         public int BookId { get; set; }
+        [Display(Name ="数量")]
+        public int Count { get; set; }
 
         public Book  Book { get; set; }
         public User User { get; set; }

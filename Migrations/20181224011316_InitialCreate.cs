@@ -16,7 +16,8 @@ namespace BookStore.Migrations
                     Publisher = table.Column<string>(maxLength: 300, nullable: true),
                     Price = table.Column<float>(nullable: false),
                     Img = table.Column<string>(maxLength: 300, nullable: true),
-                    Author = table.Column<string>(maxLength: 300, nullable: true)
+                    Author = table.Column<string>(maxLength: 300, nullable: true),
+                    Type = table.Column<string>(maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,9 +31,9 @@ namespace BookStore.Migrations
                     Id = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(maxLength: 30, nullable: false),
                     Password = table.Column<string>(maxLength: 30, nullable: false),
-                    Address = table.Column<string>(maxLength: 300, nullable: false),
-                    Phone = table.Column<string>(maxLength: 30, nullable: false),
-                    Img = table.Column<string>(maxLength: 300, nullable: false),
+                    Address = table.Column<string>(maxLength: 300, nullable: true),
+                    Phone = table.Column<string>(maxLength: 30, nullable: true),
+                    Img = table.Column<string>(maxLength: 300, nullable: true),
                     Email = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +47,8 @@ namespace BookStore.Migrations
                 {
                     CartId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    BookId = table.Column<int>(nullable: false)
+                    BookId = table.Column<int>(nullable: false),
+                    Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

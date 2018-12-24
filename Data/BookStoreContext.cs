@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BookStore.Models
 {

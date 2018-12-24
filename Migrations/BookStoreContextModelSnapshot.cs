@@ -38,6 +38,9 @@ namespace BookStore.Migrations
                     b.Property<string>("Publisher")
                         .HasMaxLength(300);
 
+                    b.Property<string>("Type")
+                        .HasMaxLength(30);
+
                     b.HasKey("Id");
 
                     b.ToTable("Book");
@@ -48,6 +51,8 @@ namespace BookStore.Migrations
                     b.Property<int>("CartId");
 
                     b.Property<int>("BookId");
+
+                    b.Property<int>("Count");
 
                     b.Property<int>("UserId");
 
@@ -97,7 +102,6 @@ namespace BookStore.Migrations
                     b.Property<int>("Id");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(300);
 
                     b.Property<string>("Email")
@@ -105,7 +109,6 @@ namespace BookStore.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Img")
-                        .IsRequired()
                         .HasMaxLength(300);
 
                     b.Property<string>("Password")
@@ -113,7 +116,6 @@ namespace BookStore.Migrations
                         .HasMaxLength(30);
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(30);
 
                     b.Property<string>("UserName")

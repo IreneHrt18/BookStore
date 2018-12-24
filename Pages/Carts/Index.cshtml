@@ -13,11 +13,15 @@
 <table class="table">
     <thead>
         <tr>
+
             <th>
                 @Html.DisplayNameFor(model => model.Cart[0].Book)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cart[0].User)
+                数量
+            </th>
+            <th>
+                单价
             </th>
             <th></th>
         </tr>
@@ -29,8 +33,13 @@
                 @Html.DisplayFor(modelItem => item.Book.BookName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Address)
+                @Html.DisplayFor(modelItem => item.Count)
             </td>
+
+            <td>
+                ￥@Html.DisplayFor(modelItem => item.Book.Price) 
+            </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.CartId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.CartId">Details</a> |

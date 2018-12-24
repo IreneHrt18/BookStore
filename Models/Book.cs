@@ -35,6 +35,10 @@ namespace BookStore.Models
         [StringLength(300)]
         public string Author { get; set; }
 
+        [Display(Name ="类型")]
+        [StringLength (30)]
+        public string Type { get; set; }
+
         public ICollection<Cart> Carts { get; set; }
         public ICollection<OrderBook> OrderBooks { get; set; }
     }

@@ -21,7 +21,7 @@ namespace BookStore.Pages.Carts
         public IActionResult OnGet()
         {
         ViewData["BookId"] = new SelectList(_context.Book, "Id", "BookName");
-        ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Address");
+        ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
             return Page();
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Models
 {
@@ -11,7 +12,7 @@ namespace BookStore.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public new int Id { get; set; }
 
         [Required]
         [Display(Name = "用户名")]
@@ -21,15 +22,12 @@ namespace BookStore.Models
         [Display(Name = "密码")]
         [StringLength(30)]
         public string Password { get; set; }
-        [Required]
         [Display(Name = "地址")]
         [StringLength(300)]
         public string Address { get; set; }
-        [Required]
         [Display(Name = "电话")]
         [StringLength(30)]
         public string Phone { get; set; }
-        [Required]
         [Display(Name = "头像")]
         [StringLength(300)]
         public string Img { get; set; }

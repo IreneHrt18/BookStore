@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookStore
 {
@@ -38,6 +39,11 @@ namespace BookStore
 
             services.AddDbContext<BookStoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BookStoreContext")));
+            //services.AddIdentity<User, IdentityRole>()
+            //       .AddEntityFrameworkStores<BookStoreContext>()
+            //       //.AddUserManager<User>()
+            //       .AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
