@@ -20,11 +20,15 @@ namespace BookStore.Pages.OrderBooks
 
         public IList<OrderBook> OrderBook { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int ?id)
         {
+
+
             OrderBook = await _context.OrderBook
                 .Include(o => o.Book)
-                .Include(o => o.Order).ToListAsync();
+                .Include(o => o.Order)
+                .Where(o=>o.Order.OrderId==id)
+                .ToListAsync();
         }
     }
 }

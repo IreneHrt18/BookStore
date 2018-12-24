@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BookStore.Models
 {
-    public class BookStoreContext : DbContext
+    public class BookStoreContext : IdentityDbContext
     {
         public BookStoreContext (DbContextOptions<BookStoreContext> options)
             : base(options)

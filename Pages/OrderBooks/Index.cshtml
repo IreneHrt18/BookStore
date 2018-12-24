@@ -14,14 +14,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderBook[0].Count)
+                @Html.DisplayNameFor(model => model.OrderBook[0].Order.OrderId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderBook[0].Book)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OrderBook[0].Order)
+                @Html.DisplayNameFor(model => model.OrderBook[0].Book.Img)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderBook[0].Count)
+            </th>
+            >
             <th></th>
         </tr>
     </thead>
@@ -29,14 +33,19 @@
 @foreach (var item in Model.OrderBook) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Count)
+                @Html.DisplayFor(modelItem => item.Order.OrderId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Book.BookName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Order.OrderId)
+               <img src=" @Html.DisplayFor(modelItem => item.Book.Img)" />
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
