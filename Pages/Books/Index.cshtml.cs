@@ -6,29 +6,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
-using Microsoft.AspNetCore.Identity;
+using ContosoUniversity;
 
 namespace BookStore.Pages.Books
 {
     public class IndexModel : PageModel
     {
-        private SignInManager<User> _signInManager  { get; set; }
         private readonly BookStore.Models.BookStoreContext _context;
 
         public IndexModel(BookStore.Models.BookStoreContext context)
         {
-            //_signInManager = signInManager;
             _context = context;
         }
 
-        public IList<Book> Book { get;set; }
+       // public string NameSort { get; set; }
 
-        public async Task OnGetAsync()
+        // public IList<Book> Book { get;set; }
+        public IQueryable<Book> Books{ get;set; }
+        public PaginatedList<Book> Book { get; set; }
+
+        public async Task OnGetAsync(string sortOrder,int? pageIndex)
         {
 
-            //var user = new User { UserName = "@qq.com", Email = "@qq.com" };
-            //await _signInManager.SignInAsync(user, isPersistent: false);
-            Book = await _context.Book.ToListAsync();
+
+            //Book = await _context.Book.OrderByDescending(o=>o.Price).ToListAsync();
+            Books = from r in _context.Book
+                    select r;
+            Books.OrderByDescending(o => o.Price);
+
+
+            int pageSize = 3;
+            Book = await PaginatedList<Book>.CreateAsync(
+                Books.AsNoTracking(), pageIndex ?? 1, pageSize);
         }
     }
 }

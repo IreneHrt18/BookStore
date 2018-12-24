@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace BookStore
 {
@@ -39,11 +40,15 @@ namespace BookStore
 
             services.AddDbContext<BookStoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BookStoreContext")));
-            //services.AddIdentity<User, IdentityRole>()
-            //       .AddEntityFrameworkStores<BookStoreContext>()
-            //       //.AddUserManager<User>()
-            //       .AddDefaultTokenProviders();
-
+            services.AddIdentity<User, IdentityRole>()
+                   .AddEntityFrameworkStores<BookStoreContext>().AddDefaultTokenProviders();
+            //.AddUserManager<User>()
+            //.AddDefaultTokenProviders();
+            //services.Add(new ServiceDescriptor(typeof(IEmailSender), typeof(IEmailSender), ServiceLifetime.Singleton));
+            //services.AddTransient();
+            //services.AddTransient<IEmailSender, AuthMessageSender>();
+            //services.AddTransient<ISmsSender, AuthMessageSender>();
+            //services.AddTransient<Models.iEmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,8 +67,10 @@ namespace BookStore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc();
         }
     }
 }
+

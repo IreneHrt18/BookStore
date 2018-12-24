@@ -1,11 +1,4 @@
-﻿
-@page
-
-@*@using Microsoft.AspNetCore.Identity;
-@using BookStore.Models;
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager*@
-
+﻿@page
 @model BookStore.Pages.Books.IndexModel
 
 @{
@@ -14,59 +7,75 @@
 
 <h2>Index</h2>
 
-@*@if (SignInManager.IsSignedIn(User))
-{
-    <h1>signIn!</h1>
-}*@
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<a asp-page="./Index" asp-route-sortOrder="price">按价格排序</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Img)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Author)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Book)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].BookName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Publisher)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Img)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Author)
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <img src=" @Html.DisplayFor(modelItem => item.Img)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Book)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BookName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Publisher)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Img)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Author)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Book.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Book.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Book.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    前一页
+</a>
+<a asp-page="./Index" class="btn btn-default">
+    @(Model.Book.PageIndex)
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Book.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    下一页
+</a>
