@@ -3,28 +3,84 @@
 
 @{
     ViewData["Title"] = "BookList";
+    string value;
+    if (ViewData["SearchString"] != null)
+    {
+        value = ViewData["SearchString"].ToString();
+    }
+    else
+    {
+        value = "";
+    }
 }
+<style>
+    .body {
+        width: 1000px;
+        margin-bottom: 10px;
+    }
+
+    #SearchForm {
+        margin-bottom: 10px;
+    }
+
+    th td {
+        width: auto;
+    }
+
+    .name {
+        width: 300px;
+    }
+
+    .price {
+        width: 100px;
+    }
+
+    .author {
+        width: 200px;
+    }
+
+    .btn-default {
+        margin-right: 20px;
+        width: 80px;
+    }
+</style>
+
 <script>
     $(function () {
-        $("#searchBox").on("change", function () {
-            $("#indexForm").submit();
-        })
+        $("[name=SearchBox]").on("change", function () {
+            $("#SearchForm").submit();
+        });
+        $("[name=Classify]").on("click", function () {
+            $("#ClassifyValue").val($(this).val())
+            alert($("#ClassifyValue").val());
+        });
     })
 </script>
 
 <h2>BookList</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<div style="margin:0 auto; width:1000px;height:auto; padding:0px;">
-    <form method="post" id="indexForm" asp-page-handler="NextPage">
-        <input type="text" id="searchBox" name="searchString" placeholder="搜索书本名称"
-               style="width:800px;margin-bottom:10px;" />
-        <table class="table-hover" border="0">
+<div class="body">
+    <div class="body-content">
+        <form method="post" id="SearchForm" asp-page-handler="SearchBook">
+            <input type="text" name="SearchBox" value="@value" placeholder="搜索书籍名称" autocomplete="off" />
+        </form>
+    </div>
+    <div class="body-content">
+        <form  method="post" asp-page-handler="">
+            <span class="text-left">图书分类：</span>
+            <input type="text" id="ClassifyValue" value="" style="display:none;" />
+            <button class="btn btn-default" name="Classify" value="教育">教育</button>
+            <button class="btn btn-default" name="Classify" value="小说">小说</button>
+            <button class="btn btn-default" name="Classify" value="历史">历史</button>
+            <button class="btn btn-default" name="Classify" value="心理">心理</button>
+            <button class="btn btn-default" name="Classify" value="经济">经济</button>
+        </form>
+    </div>
+    <div class="body-content">
+        <table class="table-hover">
             <thead>
                 <tr>
-                    <th style="width:auto">
+                    <th>
                         @Html.DisplayNameFor(model => model.Book[0].BookName)
                     </th>
                     <th>
@@ -32,6 +88,9 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Book[0].Img)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].Author)
                     </th>
                     <th>
                         操作
@@ -42,7 +101,7 @@
                 @foreach (var item in Model.Book)
                 {
                     <tr>
-                        <td class="name" style="width:300px">
+                        <td class="name">
                             @Html.DisplayFor(modelItem => item.BookName)
                         </td>
                         <td class="price">
@@ -51,34 +110,47 @@
                         <td class="img">
                             <img class="img-rounded" src="@item.Img" alt="Alternate Text" />
                         </td>
+                        <td class="author">
+                            @Html.DisplayFor(modelItem => item.Author)
+                        </td>
                         <td>
                             <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                             <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                             <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
-                        <td>
-                            <button class="btn btn-default" type="submit" asp-page-handler="AddItemToCart" asp-route-itemNo="@item.Id">
-                                添加购物车
-                            </button>
-                        </td>
+                        @*<td>
+                                <a class="btn btn-default" type="submit" asp-page-handler="AddItemToCart" asp-route-itemNo="@item.Id">
+                                    添加购物车
+                                </a>
+                            </td>*@
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
+</div>
+<div class="footer">
+    <form method="post" id="pageForm">
         @{
             var prevDisabled = !Model.Book.HasPreviousPage ? "disabled" : "";
             var nextDisabled = !Model.Book.HasNextPage ? "disabled" : "";
         }
-        <button type="submit" class="btn btn-default @prevDisabled" 
+        @*用来保存搜索字符串*@
+        <input type="text" name="SearchString" value="@value" style="display:none;" />
+        @*用来触发搜索事件*@
+        <input type="submit" id="SearchBtn" value="" style="display:none;"
+               asp-page-handler="NextPage" asp-route-pageIndex="1" />
+
+        <button class="btn btn-default @prevDisabled" type="submit" id="Prev"
                 asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex - 1)">
             前一页
         </button>
-        <button type="submit" class="btn btn-default"
+        <button class="btn btn-default" type="submit" id="Current"
                 asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex)">
             @(Model.Book.PageIndex)
         </button>
-        <button type="submit" class="btn btn-default @nextDisabled" 
-                asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex + 1)">
+        <button class="btn btn-default @nextDisabled" id="Next" type="submit"
+                asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex+1)">
             后一页
         </button>
     </form>
