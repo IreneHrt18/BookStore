@@ -12,6 +12,7 @@ namespace BookStore.Pages.Orders
 {
     public class IndexModel : PageModel
     {
+       
         private readonly BookStore.Models.BookStoreContext _context;
 
         public IndexModel(BookStore.Models.BookStoreContext context)
@@ -23,10 +24,11 @@ namespace BookStore.Pages.Orders
 
         public IList<Order> Order { get;set; }
 
-
+        
 
         public async Task OnGetAsync()
         {
+            
 
             Order = await _context.Order
                     .Include(o => o.User)

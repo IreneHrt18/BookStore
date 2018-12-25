@@ -27,7 +27,7 @@ namespace BookStore.Pages.Books
 
         public async Task OnGetAsync(string sortOrder,int? pageIndex)
         {
-
+           
 
             //Book = await _context.Book.OrderByDescending(o=>o.Price).ToListAsync();
             Books = from r in _context.Book
