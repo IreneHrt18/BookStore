@@ -36,6 +36,9 @@ namespace BookStore
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddMvc().AddRazorPagesOptions(m => m.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute()));
+
+
             services.AddDbContext<BookStoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BookStoreContext")));
         }

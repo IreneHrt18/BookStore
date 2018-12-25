@@ -3,23 +3,24 @@
 
 @{
     ViewData["Title"] = "BookList";
-    ViewBag.Title = "BookList";
-
 }
+<script>
+    $(function () {
+        $("#searchBox").on("change", function () {
+            $("#indexForm").submit();
+        })
+    })
+</script>
 
 <h2>BookList</h2>
 
-<form>
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
-    <p>
-        <input type="text" id="searchBox" asp-for="searchString" />
-        <button type="submit" class="btn btn-default">搜索</button>
-    </p>
-</form>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
 <div style="margin:0 auto; width:1000px;height:auto; padding:0px;">
-    <form method="post">
+    <form method="post" id="indexForm" asp-page-handler="NextPage">
+        <input type="text" id="searchBox" name="searchString" placeholder="搜索书本名称"
+               style="width:800px;margin-bottom:10px;" />
         <table class="table-hover" border="0">
             <thead>
                 <tr>
@@ -64,24 +65,21 @@
                 }
             </tbody>
         </table>
+        @{
+            var prevDisabled = !Model.Book.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Book.HasNextPage ? "disabled" : "";
+        }
+        <button type="submit" class="btn btn-default @prevDisabled" 
+                asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex - 1)">
+            前一页
+        </button>
+        <button type="submit" class="btn btn-default"
+                asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex)">
+            @(Model.Book.PageIndex)
+        </button>
+        <button type="submit" class="btn btn-default @nextDisabled" 
+                asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex + 1)">
+            后一页
+        </button>
     </form>
-    @{
-        var prevDisabled = !Model.Book.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.Book.HasNextPage ? "disabled" : "";
-    }
-
-    <a asp-page="./Index"
-       asp-route-pageIndex="@(Model.Book.PageIndex - 1)"
-       class="btn btn-default @prevDisabled">
-        前一页
-    </a>
-    <a asp-page="./Index" class="btn btn-default">
-        @(Model.Book.PageIndex)
-    </a>
-    <a asp-page="./Index"
-       asp-route-pageIndex="@(Model.Book.PageIndex + 1)"
-       class="btn btn-default @nextDisabled">
-        下一页
-    </a>
-
 </div>
