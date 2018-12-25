@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Pages\Users\" />
     <Folder Include="wwwroot\font\" />
   </ItemGroup>
 

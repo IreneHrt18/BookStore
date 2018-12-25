@@ -13,15 +13,14 @@
 <table class="table">
     <thead>
         <tr>
-
+            <th>
+                @Html.DisplayNameFor(model => model.Cart[0].Count)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cart[0].Book)
             </th>
             <th>
-                数量
-            </th>
-            <th>
-                单价
+                @Html.DisplayNameFor(model => model.Cart[0].User)
             </th>
             <th></th>
         </tr>
@@ -30,22 +29,34 @@
 @foreach (var item in Model.Cart) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Book.BookName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Count)
+                @Html.DisplayFor(modelItem => item.User.Id)
             </td>
-
+            
             <td>
-                ￥@Html.DisplayFor(modelItem => item.Book.Price) 
-            </td>
-
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CartId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.CartId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CartId">Delete</a>
             </td>
         </tr>
+        <tr>
+            <td>
+
+                <a asp-page="./Index" asp-route-deleteId="@item.CartId">Delete</a>
+                <form asp-page="./Index" method="get">
+                    <input type="hidden" name="editId" value="@item.CartId" />
+                    <input asp-for="Cart.Count" class="form-control" name="Count" value="@item.Count" />
+                    <span asp-validation-for="Cart.Count" class="text-danger"></span>
+                    <input type="submit" asp-page="./Index" >
+                </form>
+            </td>
+        </tr>
+
 }
+        
     </tbody>
 </table>
+<a asp-page="./Index" asp-route-settle="1">结算</a>

@@ -46,16 +46,6 @@ D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\OrderBooks\Edit.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\OrderBooks\Index.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Shared\_LoginPartial.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Create.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Delete.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Details.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Edit.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Index.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Create.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Delete.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Details.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Edit.g.cshtml.cs
-D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Index.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Login.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Logout.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\Index.g.cshtml.cs
@@ -65,3 +55,8 @@ D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
 D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
+D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Create.g.cshtml.cs
+D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Delete.g.cshtml.cs
+D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Details.g.cshtml.cs
+D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Edit.g.cshtml.cs
+D:\software\workspace\VSspace\BookStore\BookStore\obj\Debug\netcoreapp2.1\Razor\Pages\Carts\Index.g.cshtml.cs

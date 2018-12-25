@@ -13,7 +13,7 @@ namespace BookStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrderId { get; set; }
         [Display(Name = "用户")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         //[Display(Name = "书籍")]
         //public int BookId { get; set; }
 
