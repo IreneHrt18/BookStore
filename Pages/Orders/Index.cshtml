@@ -28,29 +28,48 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Order) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderId)
-            </td>
-            <td>
-                <a asp-page="../OrderBooks/Index" asp-route-id="@item.OrderId">详情</a> 
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+        @foreach (var item in Model.Order)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    <a asp-page="../OrderBooks/Index" asp-route-id="@item.OrderId">详情</a>
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
 
 
 
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.OrderList.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.OrderList.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.OrderList.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    前一页
+</a>
+<a asp-page="./Index" class="btn btn-default">
+    @(Model.OrderList.PageIndex)
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.OrderList.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    下一页
+</a>
