@@ -18,13 +18,43 @@ namespace BookStore.Pages.Carts
             _context = context;
         }
 
+        [BindProperty]
         public IList<Cart> Cart { get;set; }
 
         public async Task OnGetAsync()
         {
+            User user = new User();
+            user.Id =   "1001";
             Cart = await _context.Cart
                 .Include(c => c.Book)
-                .Include(c => c.User).ToListAsync();
+                .Include(c => c.User)
+                .Where(c => c.User.Id==user.Id)
+                .ToListAsync();
+
+            
+        }
+        public async Task OnGetDeleteAsync(int Id)
+        {
+
+            Cart cart = await _context.Cart.FindAsync(Id);
+
+            if (cart != null)
+            {
+                _context.Cart.Remove(cart);
+                await _context.SaveChangesAsync();
+            }
+            
+            RedirectToPage();
+            // code omitted for brevity
+        }
+        private IQueryable<Cart> GetCart()
+        {
+            User user = new User();
+            user.Id = "1001";
+            IQueryable<Cart> cartIQ = from c in _context.Cart
+                                      select c;
+            cartIQ = cartIQ.Where(c => c.UserId.Equals(user.Id));
+            return cartIQ;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace BookStore.Pages.Users
                 return NotFound();
             }
 
-            User = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
+            User = await _context.User.FirstOrDefaultAsync(m => m.Id .Equals( id));
 
             if (User == null)
             {

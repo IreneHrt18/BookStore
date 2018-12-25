@@ -38,7 +38,7 @@ namespace BookStore.Pages.Carts
                 return NotFound();
             }
            ViewData["BookId"] = new SelectList(_context.Book, "Id", "BookName");
-           ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Address");
+           ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
             return Page();
         }
 
