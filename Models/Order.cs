@@ -20,8 +20,7 @@ namespace BookStore.Models
         //[Required]
         //[Display(Name = "数量")]
         //public int Count { get; set; }
-
-        [Timestamp]
+        
         [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 

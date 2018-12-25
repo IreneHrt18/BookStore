@@ -2,61 +2,56 @@
 @model BookStore.Pages.Carts.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "购物车";
 }
 
-<h2>Index</h2>
+<h2>我的购物车</h2>
+<div class="container">
+    
+    <div class="table container">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
+        <div class="row">
+            <div class="col-sm-2">
+                书籍名称
+            </div>
+            <div class="col-sm-1">
                 @Html.DisplayNameFor(model => model.Cart[0].Count)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cart[0].Book)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cart[0].User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Cart) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
+            </div>
+
+        </div>
+        @if(Model.Cart.Count==0)
+        {
+            <h4>购物车是空的哦~</h4>
+        }
+            @foreach (var item in Model.Cart)
+            {
+        <div class="row">
+            <div class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.Book.BookName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.CartId">Details</a> |
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+            <div class="col-sm-3">
 
-                <a asp-page="./Index" asp-route-deleteId="@item.CartId">Delete</a>
-                <form asp-page="./Index" method="get">
-                    <input type="hidden" name="editId" value="@item.CartId" />
-                    <input asp-for="Cart.Count" class="form-control" name="Count" value="@item.Count" />
-                    <span asp-validation-for="Cart.Count" class="text-danger"></span>
-                    <input type="submit" asp-page="./Index" >
+                <form asp-page="./Index" method="get" class="form-inline">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input type="hidden" name="editId" value="@item.CartId" />
+                        <input asp-for="Cart.Count" class="form-control" name="Count" value="@item.Count" />
+                        <span asp-validation-for="Cart.Count" class="text-danger"></span>
+
+                    </div>
+                    <input type="submit" asp-page="./Index" class="btn btn-default">
+
+
                 </form>
-            </td>
-        </tr>
+            </div>
+            <div class="col-sm-1">
+                <a asp-page="./Index" asp-route-deleteId="@item.CartId" class="btn btn-danger">删除</a>
+            </div>
+        </div>
 
-}
-        
-    </tbody>
-</table>
+
+            }
+        </div>
+    </div>
+
 <a asp-page="./Index" asp-route-settle="1">结算</a>
+<a asp-page="./Index" asp-route-trunc="1">清空购物车</a>

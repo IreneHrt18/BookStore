@@ -3089,7 +3089,7 @@ body.lang-zh #nav .container .primary ul a {
     background: url(../images/icons/icon-close.svg) no-repeat center center;
     color: transparent;
     display: block;
-    float: right;
+    float: left;
     height: 48px;
     opacity: 0.8;
     overflow: hidden;

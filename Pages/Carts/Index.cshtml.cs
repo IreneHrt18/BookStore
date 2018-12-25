@@ -21,9 +21,14 @@ namespace BookStore.Pages.Carts
 
         [BindProperty]
         public IList<Cart> Cart { get; set; }
+        private User user { get; set; }
 
-        public async Task OnGetAsync(int? deleteId,int? editId,string Count,int? settle)
+        
+
+        public async Task OnGetAsync(int? deleteId,int? editId,string Count,int? settle,int? trunc)
         {
+            user = new User();
+            user.Id = "eea33d32-7993-40ec-917e-e8f0e01a9581";
             if (deleteId != null)
             {
                 await OnGetDeleteAsync(deleteId);
@@ -33,9 +38,11 @@ namespace BookStore.Pages.Carts
                 int newCount = int.Parse(Count);
                 await OnGetEditAsync(editId,newCount);
             }
-
-            User user = new User();
-            user.Id = "eea33d32-7993-40ec-917e-e8f0e01a9581";
+            if (trunc != null)
+            {
+                await OnGetTruncAsync();
+            }
+            
             Cart = await _context.Cart
                 .Include(c => c.Book)
                 .Include(c => c.User)
@@ -48,9 +55,24 @@ namespace BookStore.Pages.Carts
             }
         }
 
+        private async Task OnGetTruncAsync()
+        {
+            IList<Cart> cart = await _context.Cart
+                    .Where(c => c.UserId == user.Id)
+                    .ToListAsync();
+            if(cart!=null)
+            {
+                _context.Cart.RemoveRange(cart);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         private async Task OnGetSettleAsync()
         {
             Order order = new Order();
+            order.Time = DateTime.Now;
+            DateTime date = order.Time;
+            order.OrderBooks = new List<OrderBook>();
             foreach(Cart cartToAdd in this.Cart)
             {
                 OrderBook orderBook = new OrderBook();
