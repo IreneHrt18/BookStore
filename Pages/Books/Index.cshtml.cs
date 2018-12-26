@@ -20,16 +20,18 @@ namespace BookStore.Pages.Books
             _context = context;
             pageSize = 5;
         }
+        //查询结果
+        public IQueryable<Book> list { set; get; }
         //用于展示
         public PaginatedList<Book> Book { get; set; }
         //页面书本数量
         private int pageSize { get; set; }
-
+        
 
         //初始化页面
         public async Task OnGetAsync()
         {
-            var list = _context.Book.Select(item => item);
+            list = _context.Book.Select(item => item);
             Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), 1, pageSize);
         }
         ////添加购物车
@@ -40,31 +42,31 @@ namespace BookStore.Pages.Books
         //搜索方法
         public async Task OnPostSearchBookAsync(string SearchBox)
         {
-            await OnPostNextPageAsync(1, SearchBox);
+            list = _context.Book.Where(item => item.BookName.Contains(SearchBox));
+            ViewData["SearchString"] = SearchBox;
+            await OnPostNextPageAsync(1);
         }
         //按类别搜索
         public async Task OnPostSearchByClassAsync(string ClassifyValue)
         {
-            //此处应该是Type
-            var list = _context.Book.Where(item => item.BookName.Contains(ClassifyValue));
-            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), 1, pageSize);
+            list = _context.Book.Where(item => item.Type.Contains(ClassifyValue));
+            ViewData["SearchType"] = ClassifyValue;
+            await OnPostNextPageAsync(1);
         }
         //分页方法
-        public async Task OnPostNextPageAsync(int pageIndex, string SearchString)
+        public async Task OnPostNextPageAsync(int pageIndex,string SearchString ="",string SearchType = "")
         {
-            
-            if (SearchString != null)
+            if(SearchString!="")
             {
-                if (pageIndex < 1) pageIndex = 1;
-                var list = _context.Book.Where(item => item.BookName.Contains(SearchString));
-                Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex, pageSize);
+                list = _context.Book.Where(item => item.BookName.Contains(SearchString));
                 ViewData["SearchString"] = SearchString;
             }
-            else
+            if(SearchType!="")
             {
-                var list = _context.Book.Select(item => item);
-                Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex, pageSize);
+                list = list = _context.Book.Where(item => item.Type.Contains(SearchType));
+                ViewData["SearchType"] = SearchType;
             }
+            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex, pageSize);
         }
     }
 }

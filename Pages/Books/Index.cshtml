@@ -3,15 +3,17 @@
 
 @{
     ViewData["Title"] = "BookList";
-    string value;
+    string value = "";
     if (ViewData["SearchString"] != null)
     {
         value = ViewData["SearchString"].ToString();
     }
-    else
+    string SearchType = "";
+    if (ViewData["SearchType"] != null)
     {
-        value = "";
+        SearchType = ViewData["SearchType"].ToString();
     }
+
 }
 <style>
     .body {
@@ -68,7 +70,7 @@
         </form>
     </div>
     <div class="body-content">
-        <form  method="post" asp-page-handler="">
+        <form  method="post" asp-page-handler="SearchByClass">
             <span class="text-left">图书分类：</span>
             <input type="text" id="ClassifyValue" value="" style="display:none;" />
             <button class="btn btn-default" name="Classify" value="教育">教育</button>
@@ -139,6 +141,7 @@
         }
         @*用来保存搜索字符串*@
         <input type="text" name="SearchString" value="@value" style="display:none;" />
+        <input type="text" name="SearchType" value="@SearchType" style="display:none;" />
         @*用来触发搜索事件*@
         <input type="submit" id="SearchBtn" value="" style="display:none;"
                asp-page-handler="NextPage" asp-route-pageIndex="1" />
