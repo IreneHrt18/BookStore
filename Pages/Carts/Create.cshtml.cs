@@ -21,46 +21,23 @@ namespace BookStore.Pages.Carts
         public IActionResult OnGet()
         {
         ViewData["BookId"] = new SelectList(_context.Book, "Id", "BookName");
-        ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
+        ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return Page();
         }
-        public Cart Carts { get; set; }
 
         [BindProperty]
         public Cart Cart { get; set; }
 
-
-        public async Task<IActionResult> OnPostAsync(Book handler)
-           
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-
             _context.Cart.Add(Cart);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
-        }
-
-        public async Task<IActionResult> OnPostFirstAsync(List<Book> attendeeid) {
-            Cart mycart = new Cart();
-            foreach (Book book in attendeeid)
-            {
-               
-                mycart.BookId = book.Id;
-                mycart.BookId = 1;
-                mycart.UserId = 1001;
-
-            }
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            _context.Cart.Add(mycart);
-            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
     }

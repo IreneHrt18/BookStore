@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Closing elements
   var snackbars = document.querySelectorAll('.snackbar');
 
-  for (var i = 0; i < snackbars.length; i++) {
-    snackbars[i].addEventListener('click', function(event) {
+  for (var j = 0; j < snackbars.length; j++) {
+    snackbars[j].addEventListener('click', function(event) {
       if ((event.target.classList.contains('close')) || (event.target.parentNode.classList.contains('close'))) {
         this.classList.remove('active');
       }
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Closing elements
   var dialogs = document.querySelectorAll('.dialog');
 
-  for (var i = 0; i < dialogs.length; i++) {
-    dialogs[i].addEventListener('click', function(event) {
+  for (var k = 0; k < dialogs.length; k++) {
+    dialogs[k].addEventListener('click', function(event) {
       if ((event.target.classList.contains('close')) || (event.target.parentNode.classList.contains('close'))) {
         this.classList.remove('active');
         document.body.classList.remove('with-overlay');
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Closing elements
   var overlays = document.querySelectorAll('.overlay');
 
-  for (var i = 0; i < overlays.length; i++) {
-    overlays[i].addEventListener('click', function(event) {
+  for (var m = 0; m < overlays.length; m++) {
+    overlays[m].addEventListener('click', function(event) {
       if ((event.target.classList.contains('close')) || (event.target.parentNode.classList.contains('close'))) {
         this.classList.remove('active');
         document.body.classList.remove('with-overlay');
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Close overlays & dialogs with escape key
   document.onkeydown = function(evt) {
     evt = evt || window.event;
-    if (evt.keyCode == 27) {
+    if (evt.keyCode === 27) {
       var overlays = document.querySelectorAll('.overlay');
 
       for (var i = 0; i < overlays.length; i++) {
@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       var dialogs = document.querySelectorAll('.dialog');
 
-      for (var i = 0; i < dialogs.length; i++) {
-        dialogs[i].classList.remove('active');
+      for (var n = 0; n < dialogs.length; n++) {
+        dialogs[n].classList.remove('active');
       }
     }
   };
@@ -85,10 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
   /* COLLAPSIBLE */
   var collapsibles = document.querySelectorAll('.collapsible');
 
-  for (var i = 0; i < collapsibles.length; i++) {
-    var collapsible = collapsibles[i];
+  for (var x = 0; x < collapsibles.length; x++) {
+    var collapsible = collapsibles[x];
 
-    if (window.location.hash == '#' + collapsible.getAttribute('id')) {
+    if (window.location.hash === '#' + collapsible.getAttribute('id')) {
       collapsible.classList.add('expanded');
     } else {
       collapsible.classList.add('collapsed');

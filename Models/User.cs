@@ -12,7 +12,7 @@ namespace BookStore.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        new public string Id { get; set; }
+        public override string Id { get => base.Id; set => base.Id = value; }
         [Required]
         [Display(Name = "用户名")]
         [StringLength(30)]
@@ -33,11 +33,12 @@ namespace BookStore.Models
         [Display(Name = "头像")]
         [StringLength(300)]
         public string Img { get; set; }
-        [Required]
-        [Display(Name = "邮箱")]
-        [StringLength(50)]
-        override public string Email { get; set; }
-
+        //[Required]
+        //[Display(Name = "邮箱")]
+        //[StringLength(50)]
+        
+        //override public string Email { get; set; }
+        
         ICollection<Cart> Carts { get; set; }
         ICollection<Order> Orders { get; set; }
     }

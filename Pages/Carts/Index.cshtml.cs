@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Models;
 
+
 namespace BookStore.Pages.Carts
 {
     public class IndexModel : PageModel
@@ -19,42 +20,96 @@ namespace BookStore.Pages.Carts
         }
 
         [BindProperty]
-        public IList<Cart> Cart { get;set; }
+        public IList<Cart> Cart { get; set; }
+        private User user { get; set; }
 
-        public async Task OnGetAsync()
+        
+
+        public async Task OnGetAsync(int? deleteId,int? editId,string Count,int? settle,int? trunc)
         {
-            User user = new User();
-            user.Id =   "1001";
+            user = new User();
+            user.Id = "eea33d32-7993-40ec-917e-e8f0e01a9581";
+            if (deleteId != null)
+            {
+                await OnGetDeleteAsync(deleteId);
+            }
+            if (editId != null)
+            {
+                int newCount = int.Parse(Count);
+                await OnGetEditAsync(editId,newCount);
+            }
+            if (trunc != null)
+            {
+                await OnGetTruncAsync();
+            }
+            
             Cart = await _context.Cart
                 .Include(c => c.Book)
                 .Include(c => c.User)
-                .Where(c => c.User.Id==user.Id)
+                .Where(c => c.User.Id == user.Id)
                 .ToListAsync();
 
-            
+            if(settle!=null)
+            {
+                await OnGetSettleAsync();
+            }
         }
-        public async Task OnGetDeleteAsync(int Id)
+
+        private async Task OnGetTruncAsync()
         {
+            IList<Cart> cart = await _context.Cart
+                    .Where(c => c.UserId == user.Id)
+                    .ToListAsync();
+            if(cart!=null)
+            {
+                _context.Cart.RemoveRange(cart);
+                await _context.SaveChangesAsync();
+            }
+        }
 
-            Cart cart = await _context.Cart.FindAsync(Id);
+        private async Task OnGetSettleAsync()
+        {
+            Order order = new Order();
+            order.Time = DateTime.Now;
+            DateTime date = order.Time;
+            order.OrderBooks = new List<OrderBook>();
+            foreach(Cart cartToAdd in this.Cart)
+            {
+                OrderBook orderBook = new OrderBook();
+                orderBook.Book = cartToAdd.Book;
+                orderBook.Count = cartToAdd.Count;
+                order.OrderBooks.Add(orderBook);
+            }
+            _context.Order.Add(order);
+            await _context.SaveChangesAsync();
+        }
 
+        private async Task OnGetEditAsync(int? Id,int newCount)
+        {
+            Cart cartToUpdate = await _context.Cart
+                    .FindAsync(Id);
+            cartToUpdate.Count = newCount;
+            
+            if (cartToUpdate != null)
+            {
+
+                _context.Cart.Update(cartToUpdate);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task OnGetDeleteAsync(int? Id)
+        {
+            Cart cart = await _context.Cart
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.CartId == Id);
             if (cart != null)
             {
                 _context.Cart.Remove(cart);
                 await _context.SaveChangesAsync();
             }
-            
-            RedirectToPage();
-            // code omitted for brevity
+
         }
-        private IQueryable<Cart> GetCart()
-        {
-            User user = new User();
-            user.Id = "1001";
-            IQueryable<Cart> cartIQ = from c in _context.Cart
-                                      select c;
-            cartIQ = cartIQ.Where(c => c.UserId.Equals(user.Id));
-            return cartIQ;
-        }
+       
     }
 }
