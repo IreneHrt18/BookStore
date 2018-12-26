@@ -18,7 +18,7 @@ namespace BookStore.Pages.Books
         public  IndexModel(BookStore.Models.BookStoreContext context)
         {
             _context = context;
-            pageSize = 3;
+            pageSize = 5;
         }
         //用于展示
         public PaginatedList<Book> Book { get; set; }

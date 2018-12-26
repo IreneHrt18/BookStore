@@ -52,12 +52,14 @@
         });
         $("[name=Classify]").on("click", function () {
             $("#ClassifyValue").val($(this).val())
+            $(this).attr("class", "btn btn-Success");
+            $(this).hasClass("btn btn-Success");
             alert($("#ClassifyValue").val());
         });
     })
 </script>
 
-<h2>BookList</h2>
+<h2 class="h2">书籍浏览</h2>
 
 <div class="body">
     <div class="body-content">
@@ -129,7 +131,7 @@
         </table>
     </div>
 </div>
-<div class="footer">
+<div class="body-content">
     <form method="post" id="pageForm">
         @{
             var prevDisabled = !Model.Book.HasPreviousPage ? "disabled" : "";
