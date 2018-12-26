@@ -10,24 +10,42 @@ using ContosoUniversity;
 
 namespace BookStore.Pages.Books
 {
-    
+    public class Btn
+    {
+        public string name { set; get; }
+        public string btnClass { set; get; }
+        public Btn(string name,string btnClass)
+        {
+            this.name = name;
+            this.btnClass = btnClass;
+        }
+    }
     public class IndexModel : PageModel
     {
         private readonly BookStore.Models.BookStoreContext _context;
 
+        private string []name = {"全部", "教育","小说","历史","心理","经济" };
+
         public  IndexModel(BookStore.Models.BookStoreContext context)
         {
             _context = context;
-            pageSize = 5;
+            pageSize = 3;
+            Btns = new Btn[name.Length];
+            for (int i = 0; i < Btns.Length; i++)
+            {
+                Btns[i] = new Btn(name[i], "btn btn-default");
+            }
+            Btns[0].btnClass = "btn btn-success";
         }
+        
+        //用来显示按钮
+        public Btn []Btns;
         //查询结果
         public IQueryable<Book> list { set; get; }
         //用于展示
         public PaginatedList<Book> Book { get; set; }
         //页面书本数量
         private int pageSize { get; set; }
-        
-
         //初始化页面
         public async Task OnGetAsync()
         {
@@ -39,34 +57,33 @@ namespace BookStore.Pages.Books
         //{
 
         //}
-        //搜索方法
-        public async Task OnPostSearchBookAsync(string SearchBox)
+
+        //分页方法整合了搜索
+        public async Task OnPostNextPageAsync(int? pageIndex,string SearchString,string SearchType)
         {
-            list = _context.Book.Where(item => item.BookName.Contains(SearchBox));
-            ViewData["SearchString"] = SearchBox;
-            await OnPostNextPageAsync(1);
-        }
-        //按类别搜索
-        public async Task OnPostSearchByClassAsync(string ClassifyValue)
-        {
-            list = _context.Book.Where(item => item.Type.Contains(ClassifyValue));
-            ViewData["SearchType"] = ClassifyValue;
-            await OnPostNextPageAsync(1);
-        }
-        //分页方法
-        public async Task OnPostNextPageAsync(int pageIndex,string SearchString ="",string SearchType = "")
-        {
-            if(SearchString!="")
+            list = _context.Book.Select(item => item);
+            if (SearchString != null)
             {
-                list = _context.Book.Where(item => item.BookName.Contains(SearchString));
-                ViewData["SearchString"] = SearchString;
+                list = list.Where(item => item.BookName.Contains(SearchString));
             }
-            if(SearchType!="")
+            if(SearchType != null)
             {
-                list = list = _context.Book.Where(item => item.Type.Contains(SearchType));
-                ViewData["SearchType"] = SearchType;
+                list = list.Where(item => item.Type.Contains(SearchType));
+                foreach (var item in Btns)
+                {
+                    if (item.name == SearchType)
+                    {
+                        item.btnClass = "btn btn-success";
+                    }
+                    else
+                    {
+                        item.btnClass = "btn btn-default";
+                    }
+                }
             }
-            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex, pageSize);
+            ViewData["SearchString"] = SearchString;
+            ViewData["SearchType"] = SearchType;
+            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex?? 1, pageSize);
         }
     }
 }

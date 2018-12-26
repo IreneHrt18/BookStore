@@ -40,23 +40,17 @@
     .author {
         width: 200px;
     }
-
-    .btn-default {
-        margin-right: 20px;
-        width: 80px;
-    }
 </style>
 
 <script>
     $(function () {
         $("[name=SearchBox]").on("change", function () {
-            $("#SearchForm").submit();
+            $("[name=SearchString]").val($(this).val());
+            $("#pageForm").submit();
         });
         $("[name=Classify]").on("click", function () {
-            $("#ClassifyValue").val($(this).val())
-            $(this).attr("class", "btn btn-Success");
-            $(this).hasClass("btn btn-Success");
-            alert($("#ClassifyValue").val());
+            $("[name=SearchType]").val($(this).val());
+            $("#pageForm").submit();
         });
     })
 </script>
@@ -65,20 +59,19 @@
 
 <div class="body">
     <div class="body-content">
-        <form method="post" id="SearchForm" asp-page-handler="SearchBook">
-            <input type="text" name="SearchBox" value="@value" placeholder="搜索书籍名称" autocomplete="off" />
-        </form>
+        <input type="text" name="SearchBox" value="@value" placeholder="搜索书籍名称" autocomplete="off" />
     </div>
     <div class="body-content">
-        <form  method="post" asp-page-handler="SearchByClass">
-            <span class="text-left">图书分类：</span>
-            <input type="text" id="ClassifyValue" value="" style="display:none;" />
-            <button class="btn btn-default" name="Classify" value="教育">教育</button>
-            <button class="btn btn-default" name="Classify" value="小说">小说</button>
-            <button class="btn btn-default" name="Classify" value="历史">历史</button>
-            <button class="btn btn-default" name="Classify" value="心理">心理</button>
-            <button class="btn btn-default" name="Classify" value="经济">经济</button>
-        </form>
+
+        <span class="text-left">图书分类：</span>
+        @foreach (var item in Model.Btns)
+        {
+            <button class="@item.btnClass" style="margin-right:20px;"
+                    name="Classify" value="@item.name">
+                @item.name
+                </button>
+            }
+        <input type="text" name="ClassifyValue" style="display:none;" />
     </div>
     <div class="body-content">
         <table class="table-hover">
@@ -134,7 +127,7 @@
     </div>
 </div>
 <div class="body-content">
-    <form method="post" id="pageForm">
+    <form method="post" id="pageForm" asp-page-handler="NextPage">
         @{
             var prevDisabled = !Model.Book.HasPreviousPage ? "disabled" : "";
             var nextDisabled = !Model.Book.HasNextPage ? "disabled" : "";
