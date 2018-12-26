@@ -16,19 +16,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].Time)
+                @Html.DisplayNameFor(model => model.OrderList[0].Time)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].User.UserName)
+                @Html.DisplayNameFor(model => model.OrderList[0].User.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderId)
+                @Html.DisplayNameFor(model => model.OrderList[0].OrderId)
             </th>
 
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Order)
+        @foreach (var item in Model.OrderList)
         {
             <tr>
                 <td>
@@ -41,7 +41,7 @@
                     @Html.DisplayFor(modelItem => item.OrderId)
                 </td>
                 <td>
-                    <a asp-page="../OrderBooks/Index" asp-route-id="@item.OrderId">详情</a>
+                    <a asp-page="../OrderBooks/Index" asp-route-id="@item.OrderId">订单详情</a>
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |

@@ -11,8 +11,7 @@ using ContosoUniversity;
 namespace BookStore.Pages.Orders
 {
     public class IndexModel : PageModel
-    {
-       
+    {      
         private readonly BookStore.Models.BookStoreContext _context;
 
         public IndexModel(BookStore.Models.BookStoreContext context)
@@ -24,24 +23,19 @@ namespace BookStore.Pages.Orders
 
        // public IList<Order> Order { get;set; }
 
-        public IQueryable<Order> OrderQuery { get; set; }
-        public PaginatedList<Order> OrderList { get; set; }
+        public IQueryable<Order> OrderQuery { get; set; }           //查询的结果集
+        public PaginatedList<Order> OrderList { get; set; }         //分页查询返回的列表
 
         public async Task OnGetAsync(int ?pageIndex)
         {
-            OrderQuery = from r in _context.Order
+            OrderQuery = from r in _context.Order                    //linq查询返回的结果集
                          select r;
-            OrderQuery.Include(o => o.User)
+            OrderQuery.Include(o => o.User)                          //添加查询条件
                 .Where(o => o.User.Id == 1002)
                 .Include(o => o.OrderBooks);
-                       
 
-            //Order = await _context.Order
-            //        .Include(o => o.User)
-            //        .Where(o => o.User.Id == 1002)
-            //        .Include(o => o.OrderBooks).ToListAsync();
-            int pageSize = 3;
-            OrderList = await PaginatedList<Order>.CreateAsync(
+            int pageSize = 3;                                       //定义每页显示的个数
+            OrderList = await PaginatedList<Order>.CreateAsync(     //返回分页查询列表
                 OrderQuery.AsNoTracking(), pageIndex ?? 1, pageSize);
 
         }

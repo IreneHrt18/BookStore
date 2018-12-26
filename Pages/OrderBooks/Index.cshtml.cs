@@ -22,13 +22,23 @@ namespace BookStore.Pages.OrderBooks
 
         public async Task OnGetAsync(int ?id)
         {
+            if (id == 1001)
+            {
+                OrderBook = await _context.OrderBook
+                    .Include(o => o.Book)
+                    .Include(o => o.Order)
+                    .Where(o => o.Order.OrderId == id)
+                    .ToListAsync();
+            }
+            else
+            {
+                OrderBook = await _context.OrderBook
+                    .Include(o => o.Book)
+                    .Include(o => o.Order)
+                    .ToListAsync();
+            }
 
 
-            OrderBook = await _context.OrderBook
-                .Include(o => o.Book)
-                .Include(o => o.Order)
-                .Where(o=>o.Order.OrderId==id)
-                .ToListAsync();
         }
     }
 }
