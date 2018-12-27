@@ -138,7 +138,6 @@
         @*用来触发搜索事件*@
         <input type="submit" id="SearchBtn" value="" style="display:none;"
                asp-page-handler="NextPage" asp-route-pageIndex="1" />
-
         <button class="btn btn-default @prevDisabled" type="submit" id="Prev"
                 asp-page-handler="NextPage" asp-route-pageIndex="@(Model.Book.PageIndex - 1)">
             前一页

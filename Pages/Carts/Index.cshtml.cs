@@ -108,7 +108,6 @@ namespace BookStore.Pages.Carts
                 _context.Cart.Remove(cart);
                 await _context.SaveChangesAsync();
             }
-
         }
        
     }

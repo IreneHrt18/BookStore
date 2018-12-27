@@ -14,19 +14,35 @@ namespace BookStore.Pages.Books
     {
         public string name { set; get; }
         public string btnClass { set; get; }
-        public Btn(string name,string btnClass)
+        public Btn(string name, string btnClass)
         {
             this.name = name;
             this.btnClass = btnClass;
+        }
+    }
+    public class CartCompare : IEqualityComparer<Cart>
+    {
+        public bool Equals(Cart x, Cart y)
+        {
+            if (x.UserId == y.UserId && x.BookId == y.BookId)
+                return true;
+            else
+                return false;
+        }
+
+        public int GetHashCode(Cart obj)
+        {
+            int code = obj.BookId ^ int.Parse(obj.UserId);
+            return code.GetHashCode();
         }
     }
     public class IndexModel : PageModel
     {
         private readonly BookStore.Models.BookStoreContext _context;
 
-        private string []name = {"全部", "教育","小说","历史","心理","经济" };
+        private string[] name = { "全部", "教育", "小说", "历史", "心理", "经济" };
 
-        public  IndexModel(BookStore.Models.BookStoreContext context)
+        public IndexModel(BookStore.Models.BookStoreContext context)
         {
             _context = context;
             pageSize = 3;
@@ -37,9 +53,9 @@ namespace BookStore.Pages.Books
             }
             Btns[0].btnClass = "btn btn-success";
         }
-        
+
         //用来显示按钮
-        public Btn []Btns;
+        public Btn[] Btns;
         //查询结果
         public IQueryable<Book> list { set; get; }
         //用于展示
@@ -52,21 +68,45 @@ namespace BookStore.Pages.Books
             list = _context.Book.Select(item => item);
             Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), 1, pageSize);
         }
-        ////添加购物车
-        //public async Task<IActionResult> OnPostAddItemToCartAsync(int itemNo)
-        //{
-
-        //}
-
+        //添加购物车
+        public async Task OnPostAddItemToCartAsync(int itemNo)
+        {
+            string id = "1001";
+            if (!_context.Cart.Contains(cart, new CartCompare()))
+            {
+                Cart cart = new Cart();
+                cart.BookId = itemNo;
+                cart.UserId = id;
+                cart.Count = 1;
+                var book = _context.Book.Where(item => item.Id == itemNo).First();
+                //获取user对象
+                var user = _context.Users.Where(item => item.Id == id).First();
+                //设置购物车的user对象
+                //cart.User = user;
+                //设置购物车的Book对象
+                cart.Book = book;
+                //设置购物车的cartId
+                cart.CartId = _context.Cart.Count() + 1;
+                //添加cart
+                _context.Cart.Add(cart);
+            }
+            else
+            {
+                var cart = _context.Cart.Where(item => item.BookId == itemNo && item.UserId == id).First();
+                cart.Count++;
+                _context.Cart.Update(cart);
+            }
+            await _context.SaveChangesAsync();
+        }
         //分页方法整合了搜索
-        public async Task OnPostNextPageAsync(int? pageIndex,string SearchString,string SearchType)
+        public async Task OnPostNextPageAsync(int? pageIndex, string SearchString, string SearchType)
         {
             list = _context.Book.Select(item => item);
             if (SearchString != null)
             {
                 list = list.Where(item => item.BookName.Contains(SearchString));
             }
-            if(SearchType != null)
+            if (SearchType != null)
             {
                 list = list.Where(item => item.Type.Contains(SearchType));
                 foreach (var item in Btns)
@@ -83,7 +123,7 @@ namespace BookStore.Pages.Books
             }
             ViewData["SearchString"] = SearchString;
             ViewData["SearchType"] = SearchType;
-            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex?? 1, pageSize);
+            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex ?? 1, pageSize);
         }
     }
 }

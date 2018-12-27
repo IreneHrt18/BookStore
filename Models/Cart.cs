@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using BookStore.Migrations;
 
 namespace BookStore.Models
 {
@@ -18,7 +19,6 @@ namespace BookStore.Models
         public int BookId { get; set; }
         [Display(Name ="数量")]
         public int Count { get; set; }
-
         public Book  Book { get; set; }
         public User User { get; set; }
     }
