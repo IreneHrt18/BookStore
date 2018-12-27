@@ -17,6 +17,7 @@ namespace BookStore.Pages.Orders
         public IndexModel(BookStore.Models.BookStoreContext context)
         {
             _context = context;
+           
         }
          [BindProperty(SupportsGet =true)]
         public string SearchString { get; set; }
