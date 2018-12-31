@@ -104,7 +104,9 @@
                                     用户
                                 </a>
                             </li>
-                            
+                            <li>
+                                <a asp-page="../Index">主页</a>
+                            </li>
                         </ul>
                         
                     </div>
@@ -126,18 +128,18 @@
                                 
 
                                 <li>
-                                    <a id='side_menu_cold_foam_cold_brew' href='/menu/beverages/cold-foam-cold-brew/'>
+                                    <a id='side_menu_cold_foam_cold_brew' href="../Books/Index?handler=NextPage&SearchType=小说">
                                         小说
                                     </a>
                                 </li>
                                 <li>
-                                    <a id='side_menu_cold_foam_cold_brew_stable' href='/menu/beverages/cold-foam-cold-brew/'>
-                                        文学
+                                    <a id='side_menu_cold_foam_cold_brew_stable' href="../Books/Index?handler=NextPage&SearchType=历史">
+                                        历史
                                     </a>
                                 </li>
                                 <li>
-                                    <a id='side_menu_cold_foam_cold_brew_cold' href='/menu/beverages/cold-foam-cold-brew/'>
-                                        教辅
+                                    <a id='side_menu_cold_foam_cold_brew_cold' href="../Books/Index?handler=NextPage&SearchType=教育">
+                                        教育
                                     </a>
                                 </li>
                                
@@ -211,26 +213,7 @@
             </div>
 
         </nav>
-        @*<nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a asp-page="/Index" class="navbar-brand">BookStore</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a asp-page="/Index">Home</a></li>
-                            <li><a asp-page="/About">About</a></li>
-                            <li><a asp-page="/Contact">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>*@
+
 
         <partial name="_CookieConsentPartial" />
         <section id='content'>
@@ -252,6 +235,13 @@
                 <header class='header'>
                     <button class='icon close'>Close</button>
                 </header>
+                <script>
+                    $(function () {
+                        $("#menu-search-input").on("change", function () {
+                            window.location.href = "../Books/Index?handler=NextPage&SearchString="+$(this).val();
+                        })
+                    })
+                </script>
                 <div class='body'>
                     <div class='field search'>
                         <img src='~/images/icons/icon-search.svg' class='icon' />

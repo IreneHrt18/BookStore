@@ -24,6 +24,8 @@ namespace BookStore.Pages.Books
     {
         public bool Equals(Cart x, Cart y)
         {
+            if (x == null || y == null)
+                return false;
             if (x.UserId == y.UserId && x.BookId == y.BookId)
                 return true;
             else
@@ -69,18 +71,19 @@ namespace BookStore.Pages.Books
             Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), 1, pageSize);
         }
         //添加购物车
-        public async Task OnPostAddItemToCartAsync(int itemNo)
+        public async Task OnGetAddItemToCartAsync(int itemNo ,int ? count)
         {
             string id = "1001";
-            if (!_context.Cart.Contains(cart, new CartCompare()))
+            var carts = _context.Cart.Where(item => item.BookId == itemNo && item.UserId == id);
+            if (carts.Count()==0)
             {
-                Cart cart = new Cart();
+                var cart = new Cart();
+                cart.Count += count ?? 1;
                 cart.BookId = itemNo;
                 cart.UserId = id;
-                cart.Count = 1;
                 var book = _context.Book.Where(item => item.Id == itemNo).First();
                 //获取user对象
-                var user = _context.Users.Where(item => item.Id == id).First();
+                //var user = _context.Users.Where(item => item.Id == id).First();
                 //设置购物车的user对象
                 //cart.User = user;
                 //设置购物车的Book对象
@@ -92,8 +95,8 @@ namespace BookStore.Pages.Books
             }
             else
             {
-                var cart = _context.Cart.Where(item => item.BookId == itemNo && item.UserId == id).First();
-                cart.Count++;
+                var cart = carts.First();
+                cart.Count += count ?? 1;
                 _context.Cart.Update(cart);
             }
             await _context.SaveChangesAsync();
@@ -106,9 +109,33 @@ namespace BookStore.Pages.Books
             {
                 list = list.Where(item => item.BookName.Contains(SearchString));
             }
-            if (SearchType != null)
+            if (SearchType != null && SearchType != name[0])
             {
-                list = list.Where(item => item.Type.Contains(SearchType));
+                foreach (var item in Btns)
+                {
+                    if (item.name == SearchType)
+                    {
+                        item.btnClass = "btn btn-success";
+                    }
+                    else
+                    {
+                        item.btnClass = "btn btn-default";
+                    }
+                }
+            }
+            ViewData["SearchString"] = SearchString;
+            ViewData["SearchType"] = SearchType;
+            Book = await PaginatedList<Book>.CreateAsync(list.AsNoTracking(), pageIndex ?? 1, pageSize);
+        }
+        public async Task OnGetNextPageAsync(int? pageIndex, string SearchString, string SearchType)
+        {
+            list = _context.Book.Select(item => item);
+            if (SearchString != null)
+            {
+                list = list.Where(item => item.BookName.Contains(SearchString));
+            }
+            if (SearchType != null && SearchType != name[0])
+            {
                 foreach (var item in Btns)
                 {
                     if (item.name == SearchType)

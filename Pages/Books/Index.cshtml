@@ -58,7 +58,7 @@
 <h2 class="h2">书籍浏览</h2>
 
 <div class="body">
-    <div class="body-content">
+    <div class="body-content" style="margin-bottom:10px;">
         <input type="text" name="SearchBox" value="@value" placeholder="搜索书籍名称" autocomplete="off" />
     </div>
     <div class="body-content">
@@ -69,8 +69,8 @@
             <button class="@item.btnClass" style="margin-right:20px;"
                     name="Classify" value="@item.name">
                 @item.name
-                </button>
-            }
+            </button>
+        }
         <input type="text" name="ClassifyValue" style="display:none;" />
     </div>
     <div class="body-content">
@@ -115,11 +115,11 @@
                             <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                             <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
-                        @*<td>
-                                <a class="btn btn-default" type="submit" asp-page-handler="AddItemToCart" asp-route-itemNo="@item.Id">
-                                    添加购物车
-                                </a>
-                            </td>*@
+                        <td>
+                            <a class="btn btn-default" asp-page-handler="AddItemToCart" asp-route-itemNo="@item.Id">
+                                添加购物车
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>

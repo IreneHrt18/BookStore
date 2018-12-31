@@ -6,42 +6,65 @@
 }
 
 <h2>Details</h2>
-
+<script>
+    $(function () {
+        $("[name=addCart]").on("click", function () {
+            $.getJSON("./Index?handler=AddItemToCart",
+                "itemNo=" + $(this).val() + "&count=" + $("[name=count]").val(), function (data) {
+                    alert("成功添加 " + $("[name=count]").val() + "本 " +@Model.Book.BookName);
+                });
+        });
+    })
+</script>
+<style>
+    img{
+        width:200px;
+        height:200px;
+    }
+    .left{
+        float:left;
+        width:210px;
+        align-content:center;
+        margin-right:10px;
+    }
+    .right{
+        float:left;
+        width:auto;
+        height:400px;
+    }
+    span{
+        margin-top:10px;
+        text-align:center;
+        font-weight:600;
+    }
+</style>
 <div>
     <h4>Book</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Book.BookName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Book.BookName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Book.Publisher)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Book.Publisher)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Book.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Book.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Book.Img)
-        </dt>
-        <dd>
-            <img class="img-rounded" src="@Model.Book.Img" alt="Alternate Text" />
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Book.Author)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Book.Author)
-        </dd>
-    </dl>
+    <div>
+        <div class="left">
+            <img src="@Model.Book.Img" alt="Alternate Text" />
+            <span class="img-responsive">@Model.Book.Publisher</span>
+        </div>
+        <div class="right">
+            <p>
+                <span class="text-capitalize">名称:</span>
+                @Model.Book.BookName;
+            </p>
+            <p>
+                <span class="text-capitalize">作者:</span>
+                @Model.Book.Author;
+            </p>
+            <p>
+                <span class="text-capitalize">价格:</span>
+                @Model.Book.Price;
+            </p>
+        </div>
+    </div>
+    <input name="count" type="text" class="text-center" placeholder="添加数量"/>
+    <button name="addCart" value="@Model.Book.Id" class="btn btn-default">
+        添加进购物车
+    </button>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Book.Id">Edit</a> |
